@@ -20,14 +20,14 @@
         <item name="colorOnSecondary">@color/basic_light_white</item>
 
         <!-- Surface brand color -->
-<!--        <item name="colorSurface">@color/basic_light_white</item>-->
-<!--        <item name="colorOnSurface">@color/basic_dark_black</item>-->
-<!--        <item name="colorOnSurfaceVariant">@color/basic_dark_mid_gray</item>-->
+        <item name="colorSurface">@color/basic_light_white</item>
+        <item name="colorOnSurface">@color/basic_dark_black</item>
+        <item name="colorOnSurfaceVariant">@color/basic_dark_mid_gray</item>
 
         <!-- Status bar color. -->
-<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
-<!--        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>-->
-<!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
         <!-- Customize your theme here. -->
         <item name="materialButtonStyle">@style/Widget.App.Button</item>

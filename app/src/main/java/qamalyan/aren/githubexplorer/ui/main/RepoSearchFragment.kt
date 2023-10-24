@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import qamalyan.aren.coreui.delegate.viewBinding
 import qamalyan.aren.coreui.extension.collectLatestWhenStarted
+import qamalyan.aren.coreui.extension.hideKeyboard
 import qamalyan.aren.coreui.extension.showToast
 import qamalyan.aren.githubexplorer.R
 import qamalyan.aren.githubexplorer.common.base.BaseFragment
+import qamalyan.aren.githubexplorer.common.utils.manager.system_padding.SystemPaddingParams
 import qamalyan.aren.githubexplorer.databinding.FragmentRepoSearchBinding
 import qamalyan.aren.githubexplorer.ui.RemotePresentationState
 import qamalyan.aren.githubexplorer.ui.asRemotePresentationState
@@ -27,6 +31,7 @@ import qamalyan.aren.githubexplorer.ui.main.adapter.RepoLoadStateAdapter
 @AndroidEntryPoint
 class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_repo_search) {
 
+    override val systemPaddingParams: SystemPaddingParams = SystemPaddingParams(isTop = false)
     override val viewModel: RepoSearchViewModel by viewModels()
     private val binding by viewBinding(FragmentRepoSearchBinding::bind)
     private val adapter by lazy {
@@ -45,9 +50,10 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
         )
 
         etSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                etSearch.text?.trim()?.let {
-                    if (it.isNotEmpty()) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard()
+                etSearch.text?.let {
+                    if (it.isNotBlank()) {
                         rvRepo.scrollToPosition(0)
                         viewModel.acceptAction(UiAction.Search(query = it.toString()))
                     }
@@ -59,8 +65,9 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
         }
         etSearch.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                hideKeyboard()
                 etSearch.text?.trim()?.let {
-                    if (it.isNotEmpty()) {
+                    if (it.isNotBlank()) {
                         rvRepo.scrollToPosition(0)
                         viewModel.acceptAction(UiAction.Search(query = it.toString()))
                     }
@@ -75,7 +82,10 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
             viewModel.state
                 .map { it.query }
                 .distinctUntilChanged()
-                .collect(etSearch::setText)
+                .onEach {
+                    etSearch.setText(it)
+                    etSearch.setSelection(it.length)
+                }.launchIn(this)
         }
 
         btnRetry.setOnClickListener { adapter.retry() }

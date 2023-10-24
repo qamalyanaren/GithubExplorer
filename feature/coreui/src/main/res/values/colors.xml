@@ -4,6 +4,7 @@
     <color name="accent_main">#3183fe</color>
     <color name="accent_light_blue">#7db1fe</color>
     <color name="accent_extra_light_blue">#f2f7ff</color>
+    <color name="titleColor">#1F75FE</color>
 
     <!--Basic light-->
     <color name="basic_light_white">#ffffff</color>

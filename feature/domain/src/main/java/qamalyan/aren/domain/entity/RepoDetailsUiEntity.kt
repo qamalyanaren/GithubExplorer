@@ -3,6 +3,9 @@ package qamalyan.aren.domain.entity
 
 data class RepoDetailsUiEntity(
     val id: Long,
+    val ownerName: String?,
+    val ownerAvatarUrl: String?,
+
     val name: String,
     val description: String,
     val starsCount: Int,
@@ -13,6 +16,8 @@ data class RepoDetailsUiEntity(
     companion object {
         val DEFAULT = RepoDetailsUiEntity(
             id = -1L,
+            ownerAvatarUrl = null,
+            ownerName = null,
             name = "",
             description = "",
             starsCount = 0,

@@ -17,6 +17,7 @@ class MapperRepoEntityToDbEntity :
             language = from.language.orEmpty(),
             webUrl = from.webUrl.orEmpty(),
             ownerAvatarUrl = from.owner.avatarUrl,
+            ownerName = from.owner.login
         )
     }
 }

@@ -19,5 +19,6 @@ data class RepoDbEntity(
     val language: String,
     val webUrl: String,
 
-    val ownerAvatarUrl: String?
+    val ownerAvatarUrl: String?,
+    val ownerName: String?,
 )

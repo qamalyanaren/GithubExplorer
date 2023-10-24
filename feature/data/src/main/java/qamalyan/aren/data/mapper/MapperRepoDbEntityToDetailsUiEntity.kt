@@ -2,7 +2,6 @@ package qamalyan.aren.data.mapper
 
 import qamalyan.aren.data.database.model.RepoDbEntity
 import qamalyan.aren.domain.entity.RepoDetailsUiEntity
-import qamalyan.aren.domain.entity.RepoUiEntity
 import qamalyan.aren.domain.utils.Mapper
 
 
@@ -11,6 +10,8 @@ class MapperRepoDbEntityToDetailsUiEntity :
     override fun map(from: RepoDbEntity): RepoDetailsUiEntity {
         return RepoDetailsUiEntity(
             id = from.id,
+            ownerAvatarUrl = from.ownerAvatarUrl,
+            ownerName = from.ownerName,
             name = from.name,
             description = from.description.orEmpty(),
             starsCount = from.starsCount,
