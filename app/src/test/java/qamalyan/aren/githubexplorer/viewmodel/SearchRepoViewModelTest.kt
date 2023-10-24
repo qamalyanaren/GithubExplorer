@@ -24,7 +24,7 @@ import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 import qamalyan.aren.domain.entity.RepoUiEntity
 import qamalyan.aren.domain.usecase.GithubRepoSearchUseCase
-import qamalyan.aren.githubexplorer.ui.main.SearchRepoViewModel
+import qamalyan.aren.githubexplorer.ui.main.RepoSearchViewModel
 import qamalyan.aren.githubexplorer.ui.main.UiAction
 import qamalyan.aren.githubexplorer.ui.main.UiState
 
@@ -49,7 +49,7 @@ class SearchRepoViewModelTest {
     @Test
     fun `Given the sut is initialized, then it waits for event`() {
 
-        val sut = SearchRepoViewModel(
+        val sut = RepoSearchViewModel(
             githubRepoSearchUseCase,
             savedStateHandle
         )
@@ -64,17 +64,7 @@ class SearchRepoViewModelTest {
                 .thenReturn(
                     flowOf(PagingData.empty<RepoUiEntity>())
                 )
-//            githubRepoSearchUseCase.stub {
-//                onBlocking {
-//                    this("Android")
-//                }
-//                doAnswer {
-//                    PagingData.empty<RepoUiEntity>()
-//                }
-//            }
-
-
-            val sut = SearchRepoViewModel(githubRepoSearchUseCase, savedStateHandle)
+            val sut = RepoSearchViewModel(githubRepoSearchUseCase, savedStateHandle)
 
             val uiState = UiState(
                 query = "Android",
@@ -82,8 +72,7 @@ class SearchRepoViewModelTest {
                 hasNotScrolledForCurrentSearch = false
             )
             sut.state.test {
-                sut.accept(UiAction.Search("Android"))
-
+                sut.acceptAction(UiAction.Search("Android"))
 
                 assertEquals(uiState, awaitItem())
             }

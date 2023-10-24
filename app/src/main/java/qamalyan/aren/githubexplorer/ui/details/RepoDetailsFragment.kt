@@ -22,9 +22,7 @@ class RepoDetailsFragment : BaseFragment<RepoDetailsViewModel>(R.layout.fragment
 
     override fun initObservers() {
         collectWhenStarted(viewModel.repoDetailsEntity) { repoEntity ->
-            repoEntity?.let {
-                binding.tvName.text = it.name
-            }
+            binding.tvName.text = repoEntity.name
         }
     }
 }

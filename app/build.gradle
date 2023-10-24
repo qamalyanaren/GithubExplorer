@@ -57,7 +57,7 @@ dependencies {
     ksp libs.hilt.compiler
 
     testImplementation libs.junit4
-    implementation libs.kotlinx.coroutines.test
+    testImplementation libs.kotlinx.coroutines.test
     // mockito for creating mocks and templates
     testImplementation libs.mockito.core
     testImplementation libs.mockito.kotlin

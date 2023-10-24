@@ -14,7 +14,9 @@ class MapperRepoDbEntityToDetailsUiEntity :
             name = from.name,
             description = from.description.orEmpty(),
             starsCount = from.starsCount,
-            webUrl = from.webUrl
+            forksCount = from.forksCount,
+            language = from.language,
+            webUrl = from.webUrl,
         )
     }
 }

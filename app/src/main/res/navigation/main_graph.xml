@@ -12,7 +12,11 @@
 
         <action
             android:id="@+id/actionToRepoDetails"
-            app:destination="@id/repoDetailsFragment" />
+            app:destination="@id/repoDetailsFragment"
+            app:enterAnim="@anim/nav_slide_in_right"
+            app:exitAnim="@anim/nav_slide_out_left"
+            app:popExitAnim="@anim/nav_slide_out_right"
+            app:popEnterAnim="@anim/nav_slide_in_left" />
     </fragment>
 
     <fragment
@@ -22,7 +26,7 @@
 
         <argument
             android:name="args"
-            app:argType="long"/>
+            app:argType="long" />
 
     </fragment>
 </navigation>
