@@ -1,0 +1,70 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.navigation.safeargs.kotlin)
+}
+
+android {
+    namespace "qamalyan.aren.githubexplorer"
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "qamalyan.aren.githubexplorer"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation project(":feature:domain")
+    implementation project(":feature:data")
+    implementation project(":feature:coreui")
+
+    implementation libs.androidx.activity
+    implementation libs.androidx.fragment
+
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+
+    implementation libs.hilt.android
+    ksp libs.hilt.compiler
+
+    testImplementation libs.junit4
+    implementation libs.kotlinx.coroutines.test
+    // mockito for creating mocks and templates
+    testImplementation libs.mockito.core
+    testImplementation libs.mockito.kotlin
+    // turbine for testing the flows
+    testImplementation libs.turbine
+
+    androidTestImplementation libs.androidx.test.junit
+    androidTestImplementation libs.androidx.test.espresso
+
+}

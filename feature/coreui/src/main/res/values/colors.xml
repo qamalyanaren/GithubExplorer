@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Accent-->
+    <color name="accent_main">#3183fe</color>
+    <color name="accent_light_blue">#7db1fe</color>
+    <color name="accent_extra_light_blue">#f2f7ff</color>
+
+    <!--Basic light-->
+    <color name="basic_light_white">#ffffff</color>
+    <color name="basic_light_white_30">#4Dffffff</color>
+    <color name="basic_light_extra_light_gray">#f3f3f3</color>
+    <color name="basic_light_light_gray">#ebebeb</color>
+    <color name="basic_light_mid_gray">#d7d7d7</color>
+    <color name="basic_light_gray">#b7b5b5</color>
+    <color name="basic_light_extra_gray">#f7f7f7</color>
+    <color name="basic_light_surface">#e7e0ec</color>
+
+    <!--Basic dark-->
+    <color name="basic_dark_black">#000000</color>
+    <color name="basic_dark_light_black">#202022</color>
+    <color name="basic_dark_deep_gray">#282828</color>
+    <color name="basic_dark_deep_light_gray">#505050</color>
+    <color name="basic_dark_mid_gray">#3c3c3c</color>
+    <color name="basic_dark_light_gray">#707070</color>
+    <color name="basic_dark_mid_light_gray">#797979</color>
+    <color name="basic_dark_transparent">#00000000</color>
+    <color name="basic_dark_extra_light_gray">#828282</color>
+    <color name="basic_light_stroke_color">#DAD8D8</color>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Github.Explorer.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/accent_main</item>
+        <item name="windowSplashScreenAnimatedIcon">@color/accent_main</item>
+        <item name="postSplashScreenTheme">@style/Theme.Github.Explorer</item>
+    </style>
+
+
+    <style name="Theme.Github.Explorer" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/accent_main</item>
+        <item name="colorPrimaryVariant">@color/accent_light_blue</item>
+        <item name="colorOnPrimary">@color/basic_light_white</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/accent_main</item>
+        <item name="colorSecondaryVariant">@color/accent_light_blue</item>
+        <item name="colorOnSecondary">@color/basic_light_white</item>
+
+        <!-- Surface brand color -->
+<!--        <item name="colorSurface">@color/basic_light_white</item>-->
+<!--        <item name="colorOnSurface">@color/basic_dark_black</item>-->
+<!--        <item name="colorOnSurfaceVariant">@color/basic_dark_mid_gray</item>-->
+
+        <!-- Status bar color. -->
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+<!--        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>-->
+<!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
+
+        <!-- Customize your theme here. -->
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+    </style>
+</resources>
