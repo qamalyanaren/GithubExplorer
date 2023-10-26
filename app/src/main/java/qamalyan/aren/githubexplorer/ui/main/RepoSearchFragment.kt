@@ -55,7 +55,7 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
                 etSearch.text?.let {
                     if (it.isNotBlank()) {
                         rvRepo.scrollToPosition(0)
-                        viewModel.acceptAction(UiAction.Search(query = it.toString()))
+                        viewModel.setQueryValue(it.toString())
                     }
                 }
                 true
@@ -69,7 +69,7 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
                 etSearch.text?.trim()?.let {
                     if (it.isNotBlank()) {
                         rvRepo.scrollToPosition(0)
-                        viewModel.acceptAction(UiAction.Search(query = it.toString()))
+                        viewModel.setQueryValue(it.toString())
                     }
                 }
                 true
@@ -82,23 +82,23 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
         btnRetry.setOnClickListener { adapter.retry() }
         rvRepo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy != 0) viewModel.acceptAction(UiAction.Scroll(currentQuery = viewModel.state.value.query))
+                if (dy != 0) {
+                    viewModel.setScrollingQueryValue(viewModel.state.value.query)
+                }
             }
         })
     }
 
 
     override fun initObservers() {
+        viewModel.state
+            .map { it.query }
+            .distinctUntilChanged()
+            .onEach {
+                binding.etSearch.setText(it)
+                binding.etSearch.setSelection(it.length)
+            }.launchIn(lifecycleScope)
 
-        lifecycleScope.launch {
-            viewModel.state
-                .map { it.query }
-                .distinctUntilChanged()
-                .onEach {
-                    binding.etSearch.setText(it)
-                    binding.etSearch.setSelection(it.length)
-                }.launchIn(this)
-        }
 
         val notLoading = adapter.loadStateFlow
             .asRemotePresentationState()
