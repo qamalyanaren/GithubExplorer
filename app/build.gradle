@@ -58,10 +58,8 @@ dependencies {
 
     testImplementation libs.junit4
     testImplementation libs.kotlinx.coroutines.test
-    // mockito for creating mocks and templates
     testImplementation libs.mockito.core
     testImplementation libs.mockito.kotlin
-    // turbine for testing the flows
     testImplementation libs.turbine
 
     androidTestImplementation libs.androidx.test.junit

@@ -5,7 +5,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 
 class RepoLoadStateAdapter(
-    private val retry: () -> Unit
+    private val retryClicked: () -> Unit
 ) : LoadStateAdapter<ReposLoadStateViewHolder>() {
     override fun onBindViewHolder(holder: ReposLoadStateViewHolder, loadState: LoadState) {
         holder.bind(loadState)
@@ -15,6 +15,6 @@ class RepoLoadStateAdapter(
         parent: ViewGroup,
         loadState: LoadState
     ): ReposLoadStateViewHolder {
-        return ReposLoadStateViewHolder.create(parent, retry)
+        return ReposLoadStateViewHolder.create(parent, retryClicked)
     }
 }

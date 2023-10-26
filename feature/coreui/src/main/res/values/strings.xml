@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Region repo search-->
+    <string name="repo_search_hint">GitHub Repository</string>
+    <string name="repo_search_empty_result">No results 😓</string>
+    <string name="repo_search_btn_retry">Retry</string>
+    <string name="repo_search_toast_error">😨 Wooops %s</string>
+
+    <string name="repo_item_loading">Loading</string>
+    <string name="repo_item_unknown">\?</string>
+
+
+    <!--Region repo details-->
+    <string name="repo_details_language">Language: %s</string>
+    <string name="repo_details_btn_explore">Explore in the github</string>
+</resources>

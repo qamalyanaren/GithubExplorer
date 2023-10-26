@@ -40,7 +40,6 @@ dependencies {
     api libs.androidx.core.splashscreen
     api libs.material
     api libs.androidx.appcompat
-    api libs.kiel.recycler
 
     api libs.glide
 }

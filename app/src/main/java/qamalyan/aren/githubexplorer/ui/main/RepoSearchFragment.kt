@@ -21,10 +21,9 @@ import qamalyan.aren.coreui.extension.hideKeyboard
 import qamalyan.aren.coreui.extension.showToast
 import qamalyan.aren.githubexplorer.R
 import qamalyan.aren.githubexplorer.common.base.BaseFragment
+import qamalyan.aren.githubexplorer.common.utils.RString
 import qamalyan.aren.githubexplorer.common.utils.manager.system_padding.SystemPaddingParams
 import qamalyan.aren.githubexplorer.databinding.FragmentRepoSearchBinding
-import qamalyan.aren.githubexplorer.ui.RemotePresentationState
-import qamalyan.aren.githubexplorer.ui.asRemotePresentationState
 import qamalyan.aren.githubexplorer.ui.main.adapter.RepoAdapter
 import qamalyan.aren.githubexplorer.ui.main.adapter.RepoLoadStateAdapter
 
@@ -41,12 +40,13 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
             }
         )
     }
+    private val headerAdapter by lazy { RepoLoadStateAdapter { adapter.retry() } }
+    private val footerAdapter by lazy { RepoLoadStateAdapter { adapter.retry() } }
 
     override fun initView(): Unit = with(binding) {
-        val header = RepoLoadStateAdapter { adapter.retry() }
         rvRepo.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = header,
-            footer = RepoLoadStateAdapter { adapter.retry() }
+            header = headerAdapter,
+            footer = footerAdapter
         )
 
         etSearch.setOnEditorActionListener { _, actionId, _ ->
@@ -78,15 +78,6 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.state
-                .map { it.query }
-                .distinctUntilChanged()
-                .onEach {
-                    etSearch.setText(it)
-                    etSearch.setSelection(it.length)
-                }.launchIn(this)
-        }
 
         btnRetry.setOnClickListener { adapter.retry() }
         rvRepo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -94,6 +85,21 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
                 if (dy != 0) viewModel.acceptAction(UiAction.Scroll(currentQuery = viewModel.state.value.query))
             }
         })
+    }
+
+
+    override fun initObservers() {
+
+        lifecycleScope.launch {
+            viewModel.state
+                .map { it.query }
+                .distinctUntilChanged()
+                .onEach {
+                    binding.etSearch.setText(it)
+                    binding.etSearch.setSelection(it.length)
+                }.launchIn(this)
+        }
+
         val notLoading = adapter.loadStateFlow
             .asRemotePresentationState()
             .map { it == RemotePresentationState.PRESENTED }
@@ -116,7 +122,7 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
 
         lifecycleScope.launch {
             shouldScrollToTop.collect { shouldScroll ->
-                if (shouldScroll) rvRepo.scrollToPosition(0)
+                if (shouldScroll) binding.rvRepo.scrollToPosition(0)
             }
         }
 
@@ -124,7 +130,7 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
             adapter.loadStateFlow.collect { loadState ->
                 // Show a retry header if there was an error refreshing, and items were previously
                 // cached OR default to the default prepend state
-                header.loadState = loadState.mediator
+                headerAdapter.loadState = loadState.mediator
                     ?.refresh
                     ?.takeIf { it is LoadState.Error && adapter.itemCount > 0 }
                     ?: loadState.prepend
@@ -134,12 +140,12 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
                 // show empty list
                 binding.tvEmpty.isVisible = isListEmpty
                 // Only show the list if refresh succeeds, either from the the local db or the remote.
-                rvRepo.isVisible =
+                binding.rvRepo.isVisible =
                     loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
                 // Show loading spinner during initial load or refresh.
-                pbLoading.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                binding.pbLoading.isVisible = loadState.mediator?.refresh is LoadState.Loading
                 // Show the retry state if initial load or refresh fails.
-                btnRetry.isVisible =
+                binding.btnRetry.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && adapter.itemCount == 0
                 // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
                 val errorState = loadState.source.append as? LoadState.Error
@@ -147,14 +153,9 @@ class RepoSearchFragment : BaseFragment<RepoSearchViewModel>(R.layout.fragment_r
                     ?: loadState.append as? LoadState.Error
                     ?: loadState.prepend as? LoadState.Error
                 errorState?.let {
-                    showToast("\uD83D\uDE28 Wooops ${it.error}")
+                    showToast(getString(RString.repo_search_toast_error, it.error))
                 }
             }
         }
-    }
-
-
-    override fun initObservers() {
-
     }
 }

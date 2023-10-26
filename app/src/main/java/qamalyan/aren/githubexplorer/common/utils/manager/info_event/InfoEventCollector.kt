@@ -25,8 +25,8 @@ class InfoEventCollectorImpl : InfoEventCollector {
 
     private fun onErrorAlert(host: Fragment, event: InfoEvent.ErrorAlert) {
         MaterialAlertDialogBuilder(host.requireContext())
-            .setTitle(event.title?.asString(host.requireContext()))
-            .setMessage(event.message?.asString(host.requireContext()))
+            .setTitle(event.title.asString(host.requireContext()))
+            .setMessage(event.message.asString(host.requireContext()))
             .setPositiveButton(event.btnText.asString(host.requireContext()), null)
             .show()
     }

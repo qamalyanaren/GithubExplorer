@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/error_msg"
+        android:id="@+id/tvErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -17,16 +17,16 @@
         tools:text="Timeout" />
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/pbLoading"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/retry_button"
+        android:id="@+id/btnRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/retry" />
+        android:text="@string/repo_search_btn_retry" />
 </LinearLayout>

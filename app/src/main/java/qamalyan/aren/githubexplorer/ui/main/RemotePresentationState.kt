@@ -1,4 +1,4 @@
-package qamalyan.aren.githubexplorer.ui
+package qamalyan.aren.githubexplorer.ui.main
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState

@@ -5,34 +5,35 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import qamalyan.aren.githubexplorer.R
 import qamalyan.aren.githubexplorer.databinding.ItemRepoLoadStateFooterBinding
 
 
 class ReposLoadStateViewHolder(
     private val binding: ItemRepoLoadStateFooterBinding,
-    retry: () -> Unit
+    retryClicked: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.retryButton.setOnClickListener { retry.invoke() }
+        binding.btnRetry.setOnClickListener { retryClicked.invoke() }
     }
 
-    fun bind(loadState: LoadState) {
+    fun bind(loadState: LoadState) = with(binding) {
         if (loadState is LoadState.Error) {
-            binding.errorMsg.text = loadState.error.localizedMessage
+            tvErrorMessage.text = loadState.error.localizedMessage
         }
-        binding.progressBar.isVisible = loadState is LoadState.Loading
-        binding.retryButton.isVisible = loadState is LoadState.Error
-        binding.errorMsg.isVisible = loadState is LoadState.Error
+        pbLoading.isVisible = loadState is LoadState.Loading
+        btnRetry.isVisible = loadState is LoadState.Error
+        tvErrorMessage.isVisible = loadState is LoadState.Error
     }
 
     companion object {
-        fun create(parent: ViewGroup, retry: () -> Unit): ReposLoadStateViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_repo_load_state_footer, parent, false)
-            val binding = ItemRepoLoadStateFooterBinding.bind(view)
-            return ReposLoadStateViewHolder(binding, retry)
+        fun create(parent: ViewGroup, retryClicked: () -> Unit): ReposLoadStateViewHolder {
+            val binding = ItemRepoLoadStateFooterBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return ReposLoadStateViewHolder(binding, retryClicked)
         }
     }
 }

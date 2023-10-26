@@ -1,29 +1,24 @@
 package qamalyan.aren.githubexplorer.ui.main.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import qamalyan.aren.domain.entity.RepoUiEntity
-import qamalyan.aren.githubexplorer.R
+import qamalyan.aren.githubexplorer.common.utils.RString
 import qamalyan.aren.githubexplorer.databinding.ItemRepoBinding
 
-/**
- * View Holder for a [RepoUiEntity] RecyclerView list item.
- */
 class RepoViewHolder(
-    view: View,
-    private val onItemClicked: (repo: RepoUiEntity) -> Unit
-) : RecyclerView.ViewHolder(view) {
-    private val binding = ItemRepoBinding.bind(view)
+    private val binding: ItemRepoBinding,
+    onItemClicked: (repo: RepoUiEntity) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     private var repoEntity: RepoUiEntity? = null
 
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             repoEntity?.let {
-                onItemClicked(it)
+                onItemClicked.invoke(it)
             }
         }
     }
@@ -31,9 +26,9 @@ class RepoViewHolder(
     fun bind(repo: RepoUiEntity?) = with(binding) {
         if (repo == null) {
             val resources = itemView.resources
-            tvName.text = resources.getString(R.string.loading)
+            tvName.text = resources.getString(RString.repo_item_loading)
             tvDescription.isVisible = false
-            tvStarsCount.text = resources.getString(R.string.unknown)
+            tvStarsCount.text = resources.getString(RString.repo_item_unknown)
         } else {
             repoEntity = repo
             tvName.text = repo.name
@@ -45,9 +40,12 @@ class RepoViewHolder(
 
     companion object {
         fun create(parent: ViewGroup, onItemClicked: (repo: RepoUiEntity) -> Unit): RepoViewHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_repo, parent, false)
-            return RepoViewHolder(view, onItemClicked)
+            val binding = ItemRepoBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return RepoViewHolder(binding, onItemClicked)
         }
     }
 }

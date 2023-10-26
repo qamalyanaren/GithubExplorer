@@ -1,6 +1,5 @@
 package qamalyan.aren.githubexplorer.common.utils
 
-//typealias RDrawable = qamalyan.aren.coreui.R.drawable
+typealias RDrawable = qamalyan.aren.coreui.R.drawable
 typealias RColor = qamalyan.aren.coreui.R.color
-//typealias RString = qamalyan.aren.coreui.R.string
-//typealias RId = qamalyan.aren.coreui.R.id
+typealias RString = qamalyan.aren.coreui.R.string

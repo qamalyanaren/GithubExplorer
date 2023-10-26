@@ -11,6 +11,7 @@ import qamalyan.aren.coreui.extension.openLink
 import qamalyan.aren.coreui.utils.setOnSingleClickListener
 import qamalyan.aren.githubexplorer.R
 import qamalyan.aren.githubexplorer.common.base.BaseFragment
+import qamalyan.aren.githubexplorer.common.utils.RString
 import qamalyan.aren.githubexplorer.databinding.FragmentRepoDetailsBinding
 
 @AndroidEntryPoint
@@ -35,7 +36,8 @@ class RepoDetailsFragment : BaseFragment<RepoDetailsViewModel>(R.layout.fragment
                 tvDescription.text = repoEntity.description.parseAsHtml()
                 tvOwnerName.text = repoEntity.ownerName
 
-                tvLanguage.text = resources.getString(R.string.language, repoEntity.language)
+                tvLanguage.text =
+                    resources.getString(RString.repo_details_language, repoEntity.language)
                 tvStarsCount.text = "${repoEntity.starsCount}"
                 tvForksCount.text = "${repoEntity.forksCount}"
 
